@@ -43,6 +43,133 @@ Sajjad Taheri（初始版本的架构师和GSoC导师，加州大学欧文分校
 Mohammad Reza Haghighat（英特尔公司项目发起人和赞助商）
 胡宁新（英特尔公司学生导师）
 
+# 使用OpenCV.js
+
+## 下载OpenCV.js
+
+在本教程中，您将学习如何在网页中开始使用OpenCV.js。您可以在每个版本中获取副本，或者只需从`https://docs.opencv.org/{版本号}/opencv.js`（例如：[https://docs.opencv.org/3.4.0/opencv.js](https://docs.opencv.org/3.4.0/opencv.js)，如果需要最新版本，请使用）。您还可以按照教程构建 OpenCV.js 构建自己的副本。opencv.jsopencv.jsopencv-{版本号}-docs.zip3.4
+
+## 第一步：创建网页
+
+首先，让我们创建一个能够上传图像的简单网页。
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hello OpenCV.js</title>
+</head>
+<body>
+<h2>Hello OpenCV.js</h2>
+<div>
+  <div class="inputoutput">
+    <img id="imageSrc" alt="No Image" />
+    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+  </div>
+</div>
+<script type="text/javascript">
+let imgElement = document.getElementById("imageSrc")
+let inputElement = document.getElementById("fileInput");
+inputElement.addEventListener("change", (e) => {
+  imgElement.src = URL.createObjectURL(e.target.files[0]);
+}, false);
+</script>
+</body>
+</html>
+```
+
+要运行此网页，请复制上述内容并保存到index.html文件。请使用 Web 浏览器打开即可运行。
+
+?>更好的做法是使用本地 Web 服务器来托管index.html
+
+**同步加载示例：**
+
+<script src=“opencv.js” type=“text/javascript”></script>
+
+您可能希望在 <script> 标记中按属性异步加载。要在准备就绪时收到通知，您可以注册对属性的回调。opencv.js async opencv.js onload
+
+**异步加载示例**
+
+<script async src=“opencv.js” onload=“onOpenCvReady（）;” type=“text/javascript”></script>
+
+## 第二步：使用OpenCV.js
+
+准备就绪后，您可以通过对象访问 OpenCV 对象和函数。`opencv.js``cv`
+
+例如，您可以通过 `cv.imread` 从图像创建 `cv.Mat`。
+
+!>由于图像加载是异步的，因此您需要将 [cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html) 创建放在回调中。`onload`
+
+```js
+imgElement.onload = function（） {
+	let mat = cv.imread(mgElement);
+}
+```
+
+许多OpenCV函数可用于处理[cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)。有关详细信息，您可以参考其他教程，例如[图像处理](https://docs.opencv.org/3.4/d2/df0/tutorial_js_table_of_contents_imgproc.html)。
+
+在本教程中，我们只在屏幕上显示一个 [cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)。要显示 [cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)，您需要一个 canvas 元素。
+
+```html
+<canvas id=“outputCanvas”></canvas>
+```
+
+您可以使用 [cv.imshow](https://docs.opencv.org/3.4/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563) 在画布上显示 [cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)。
+
+```js
+cv.imshow("outputCanvas", mat);
+```
+
+将所有步骤放在一起，最终index.html如下所示:
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello OpenCV.js</title>
+</head>
+
+<body>
+    <h2>Hello OpenCV.js</h2>
+    <p id="status">OpenCV.js is loading...</p>
+    <div>
+        <div class="inputoutput">
+            <img id="imageSrc" alt="No Image" />
+            <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+        </div>
+        <div class="inputoutput">
+            <canvas id="canvasOutput"></canvas>
+            <div class="caption">canvasOutput</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let imgElement = document.getElementById('imageSrc');
+        let inputElement = document.getElementById('fileInput');
+        inputElement.addEventListener('change', (e) => {
+            imgElement.src = URL.createObjectURL(e.target.files[0]);
+        }, false);
+        imgElement.onload = function () {
+            let mat = cv.imread(imgElement);
+            cv.imshow('canvasOutput', mat);
+            mat.delete();
+        };
+        var Module = {
+            onRuntimeInitialized() {
+                document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+            }
+        };
+    </script>
+    <script async src="https://docs.opencv.org/3.4.0/opencv.js" type="text/javascript"></script>
+</body>
+
+</html>
+```
+
+!>你必须调用[cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)的删除方法来释放Emscripten堆中分配的内存。有关详细信息，请参阅 [Emscripten 的内存管理](https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html#memory-management)。
+
 # 图形用户界面功能
 
 在这里，您将学习如何读取和显示图像和视频，并创建跟踪栏。
