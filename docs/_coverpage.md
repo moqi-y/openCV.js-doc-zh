@@ -9,4 +9,4 @@
 - 众多主题 -->
 
 [GitHub](https://github.com/moqi-y/openCV.js-doc-zh)
-[Get Started](#opencvjs简介)
+[快速上手](#opencvjs简介)
