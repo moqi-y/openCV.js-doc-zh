@@ -266,6 +266,110 @@ dst.delete();
 
 学习从相机捕获视频并播放
 
+通常，我们必须使用相机捕获实时流。在OpenCV.js中，我们使用[WebRTC](https://webrtc.org/)和HTML canvas元素来实现这一点。让我们从相机（内置或USB）捕获视频，将其转换为灰度视频并显示。
+
+**首先，我们使用WebRTC navigator.mediaDevices.getUserMedia来获取媒体流。**
+
+```js
+let video = document.getElementById("videoInput")); //videoInput是<video>标签的 ID
+navigator.mediaDevices.getUserMedia({ video： true, audio： false })
+    .then(function(stream) {
+        video.srcObject = stream;
+        video.play();
+    })
+    .catch(function(err) {
+        console.log("An error occured! " + err);
+    });
+```
+
+!从视频文件捕获视频时，不需要此功能。但请注意，HTML视频元素仅支持Ogg（Theora），WebM（VP8 / VP9）或MP4（H.264）的视频格式。
+
+**播放视频**
+
+现在，浏览器获取相机流。然后，我们使用 Canvas 2D API 的 CanvasRenderingContext2D.drawImage（） 方法将视频绘制到画布上。最后，我们可以使用图像入门中的方法来读取和显示画布中的[图像](https://docs.opencv.org/3.3.1/df/d24/tutorial_js_image_display.html)。为了播放视频，[cv.imshow（）](https://docs.opencv.org/3.3.1/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563) 应该每延迟一毫秒执行一次。我们推荐 setTimeout（） 方法。如果视频为 30fps，则延迟毫秒应为 （1000/30 - processing_time）。
+
+```js
+let canvasFrame = document.getElementById("canvasFrame"); // canvasFrame是<canvas>标签的ID 
+let context = canvasFrame.getContext("2d");
+let src = new cv.Mat(height, width, cv.CV_8UC4);
+let dst = new cv.Mat(height, width, cv.CV_8UC1);
+const FPS = 30;
+function processVideo() {
+    let begin = Date.now();
+    context.drawImage(video, 0, 0, width, height);
+    src.data.set(context.getImageData(0, 0, width, height).data);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+    cv.imshow("canvasOutput", dst); // canvasOutput是另一个<canvas>标签的 id;
+    // 播放下一个
+    let delay = 1000/FPS - (Date.now() - begin);
+    setTimeout(processVideo, delay);
+}
+// 播放第一个
+setTimeout(processVideo, 0);
+```
+
+OpenCV.js 使用上述方法实现 `cv.VideoCapture(videoSource)`您无需手动添加隐藏的画布元素。
+
+**videoSource**：视频 ID 或元素
+
+上面的视频播放代码可以简化如下：
+
+```js
+let src = new cv.Mat(height, width, cv.CV_8UC4);
+let dst = new cv.Mat(height, width, cv.CV_8UC1);
+let cap = new cv.VideoCapture(videoSource);
+const FPS = 30;
+function processVideo() {
+    let begin = Date.now();
+    cap.read(src);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+    cv.imshow("canvasOutput", dst);
+    // 播放下一个
+    let delay = 1000/FPS - (Date.now() - begin);
+    setTimeout(processVideo, delay);
+}
+// 播放第一个
+setTimeout(processVideo, 0);
+```
+
+!>请记住在停止后删除 src 和 dst
+
+**完整示例：**
+
+```js
+let video = document.getElementById('videoInput');
+let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+let cap = new cv.VideoCapture(video); //创建相机捕捉实例。请正确连接相机设备。否则可能报错“相机错误：未找到错误请求的设备”
+
+const FPS = 30;
+function processVideo() {
+    try {
+        if (!streaming) {
+            // 清除src和dst并停止任务
+            src.delete();
+            dst.delete();
+            return;
+        }
+        let begin = Date.now();
+        // 开始处理.
+        cap.read(src);
+        cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+        cv.imshow('canvasOutput', dst);
+        // 播放第二个
+        let delay = 1000/FPS - (Date.now() - begin);
+        setTimeout(processVideo, delay);
+    } catch (err) {
+        utils.printError(err);
+    }
+};
+
+// 播放第一个
+setTimeout(processVideo, 0);
+```
+
+
+
 ## 向应用程序添加跟踪栏
 
 创建跟踪栏以控制某些参数
