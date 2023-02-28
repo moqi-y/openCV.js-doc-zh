@@ -373,3 +373,73 @@ setTimeout(processVideo, 0);
 ## 向应用程序添加跟踪栏
 
 创建跟踪栏以控制某些参数
+
+使用 HTML DOM 输入范围对象将跟踪栏添加到应用程序。
+
+**首先，我们需要创建三个画布元素：两个用于输入，一个用于输出。请参阅[教程图像入门](https://docs.opencv.org/3.3.1/df/d24/tutorial_js_image_display.html)。**
+
+```js
+let src1 = cv.imread('canvasInput1');
+let src2 = cv.imread('canvasInput2');
+```
+
+**然后，我们使用 HTML DOM 输入范围对象来实现跟踪栏,如下所示：**
+
+<input type="range">
+
+!>`type=“range”` 的` <input> `属性在 Internet Explorer 9 和更早版本中不支持。
+
+您可以使用 `document.createElement()`方法创建一个 type=“range” 的` <input> `元素：
+
+```js
+let x = document.createElement('INPUT');
+x.setAttribute('type', 'range');
+```
+
+您也可以使用`getElementById()`访问type="range"的`<input>`元素：
+
+```js
+let x = document.getElementById('myRange');
+```
+
+作为跟踪栏，range 元素需要跟踪栏名称、默认值、最小值、最大值、步长和每次跟踪栏值更改时执行的回调函数。回调函数始终具有默认参数，即跟踪栏位置。此外，显示跟踪栏值的文本元素也可以。在我们的例子中，我们可以创建如下所示的跟踪栏：
+
+```js
+重量: <input type="range" id="trackbar" value="50" min="0" max="100" step="1" oninput="callback()">
+<input type="text" id="weightValue" size="3" value="50"/>
+```
+
+**最后，我们可以在回调函数中使用跟踪栏值，混合两张图片，并显示结果**。
+
+```js
+let weightValue = document.getElementById('weightValue');
+let trackbar = document.getElementById('trackbar');
+weightValue.setAttribute('value', trackbar.value);
+let alpha = trackbar.value/trackbar.max;
+let beta = ( 1.0 - alpha );
+let src1 = cv.imread('canvasInput1');
+let src2 = cv.imread('canvasInput2');
+let dst = new cv.Mat();
+cv.addWeighted( src1, alpha, src2, beta, 0.0, dst, -1);
+cv.imshow('canvasOutput', dst);
+dst.delete();
+src1.delete();
+src2.delete();
+```
+
+**完整示例：**
+
+```js
+let trackbar = document.getElementById('trackbar');
+let alpha = trackbar.value/trackbar.max;
+let beta = ( 1.0 - alpha );
+let src1 = cv.imread('canvasInput1');
+let src2 = cv.imread('canvasInput2');
+let dst = new cv.Mat();
+cv.addWeighted( src1, alpha, src2, beta, 0.0, dst, -1);
+cv.imshow('canvasOutput', dst);
+dst.delete();
+src1.delete();
+src2.delete();
+```
+
