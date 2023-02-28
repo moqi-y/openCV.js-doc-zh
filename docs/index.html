@@ -16,25 +16,11 @@
     window.$docsify = {
       name: 'OpenCV.js中文文档',
       repo: 'https://github.com/moqi-y/openCV.js-doc-zh',
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script>
-    window.$docsify = {
-      search: 'auto', // 默认值
-      repo: 'https://github.com/moqi-y/openCV.js-doc-zh',
-      search: [
-        '/', // => /README.md
-      ],
       copyCode: {
         buttonText: '点击复制',
         errorText: '出错了',
         successText: '已复制'
       },
-      plugins: [
-        EditOnGithubPlugin.create('https://github.com/moqi-y/openCV.js-doc-zh')
-      ],
 
       // 完整配置参数
       search: {
@@ -76,6 +62,21 @@
         // 匹配到的字符串将被用来识别索引
         pathNamespaces: /^(\/(zh-cn|ru-ru))?(\/(v1|v2))?/
       }
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script>
+    window.$docsify = {
+      search: 'auto', // 默认值
+      repo: 'https://github.com/moqi-y/openCV.js-doc-zh',
+      search: [
+        '/', // => /README.md
+      ],
+      plugins: [
+        EditOnGithubPlugin.create('https://github.com/moqi-y/openCV.js-doc-zh')
+      ],
+
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
