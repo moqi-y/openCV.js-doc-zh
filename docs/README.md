@@ -1,5 +1,3 @@
-# OpenCV.js教程
-
 # OpenCV.js简介
 
 ## OpenCV.js简介
