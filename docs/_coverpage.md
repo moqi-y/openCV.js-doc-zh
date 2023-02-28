@@ -1,6 +1,6 @@
 ![logo](./img/opencv-logo-small.png)
 
-# OpenCV.js <small>v3.3.1</small>
+# OpenCV.js <small>v3.x</small>
 
 > 一个前端OpenCV库
 
