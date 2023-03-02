@@ -441,3 +441,283 @@ src1.delete();
 src2.delete();
 ```
 
+# 核心业务
+
+在本节中，您将学习一些对图像的基本操作，一些数学工具和一些数据结构等。
+
+## 图像的基本操作
+
+学习读取和编辑像素值，使用图像ROI和其他基本操作。
+
+**访问图像属性**
+
+图像属性包括行数、列数和大小、深度、通道、图像数据类型。
+
+```js
+let src = cv.imread("canvasInput");
+console.log('图像宽度: ' + src.cols + '\n' +
+            '图像高度: ' + src.rows + '\n' +
+            '图像大小: ' + src.size().width + '*' src.size().height + '\n' +
+            '图像深度: ' + src.depth() + '\n' +
+            '图像通道' + src.channels() + '\n' +
+            '图像类型' + src.type() + '\n');
+```
+
+!>`src.type()`在调试时非常重要，因为 OpenCV.js 代码中的大量错误是由无效数据类型引起的。
+
+**构建Mat(垫子)的方法**
+
+有 4 个基本构造函数：
+
+```js
+// 1. 默认构造函数
+let mat = new cv.Mat();
+// 2. 按大小和类型划分的二维数组
+let mat = new cv.Mat(size, type);
+// 3. 按行、列和类型划分的二维数组
+let mat = new cv.Mat(rows, cols, type);
+// 4. 具有初始化值的行、列和类型的二维数组
+let mat = new cv.Mat(rows, cols, type, new cv.Scalar());
+```
+
+有 3 个静态函数：
+
+```js
+// 1. 创建一个充满零的垫子
+let mat = cv.Mat.zeros(rows, cols, type);
+// 2. 创建一个充满垫子的垫子
+let mat = cv.Mat.ones(rows, cols, type);
+// 3. 创建一个作为单位矩阵的垫子
+let mat = cv.Mat.eye(rows, cols, type);
+```
+
+有 2 个工厂函数：
+
+```js
+// 1. 使用 JS 数组构造一个垫子(mat)
+// 例如: let mat = cv.matFromArray(2, 2, cv.CV_8UC1, [1, 2, 3, 4]);
+let mat = cv.matFromArray(rows, cols, type, array);
+// 2. 使用 imgData 构建一个垫子
+let ctx = canvas.getContext("2d");
+let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+let mat = cv.matFromImageData(imgData);
+```
+
+!>当您不想再使用它时，不要忘记删除 [cv.Mat](https://docs.opencv.org/3.3.1/d3/d63/classcv_1_1Mat.html)。
+
+**复制垫子**
+
+有两种方法可以复制 Mat：
+
+```js
+// 1. 克隆
+let dst = src.clone();
+// 2. 复制到（仅复制mask中指示的条目）
+src.copyTo(dst, mask);
+```
+
+**转换垫子的类型**
+
+我们使用函数：`convertTo（m， rtype， alpha = 1， beta = 0）`
+
+| 参数  | 参数说明                                                     |
+| :---- | ------------------------------------------------------------ |
+| m     | 输出矩阵;如果在操作之前没有适当的大小或类型，则会重新分配它。 |
+| rtype | 所需的输出矩阵类型，或者更确切地说，深度，因为通道数与输入相同;如果 rtype 为负，则输出矩阵的类型将与输入矩阵的类型相同。 |
+| alpha | 可选比例因子。默认：1                                        |
+| beta  | 添加到缩放值的可选增量。默认：0                              |
+
+```js
+src.convertTo(dst, rtype);
+```
+
+**使用 MatVector**
+
+```js
+let mat = new cv.Mat();
+// 初始化矩阵向量
+let matVec = new cv.MatVector();
+// 将垫子推回 MatVector
+matVec.push_back(mat);
+// 获取垫子矢量
+let cnt = matVec.get(0);
+mat.delete(); matVec.delete(); cnt.delete();
+```
+
+!>不要忘记删除[cv.Mat](https://docs.opencv.org/3.3.1/d3/d63/classcv_1_1Mat.html)，cv.MatVector和cnt（你从MatVector获得的垫子），当你不想再使用它们时。
+
+**访问和修改像素值**
+
+首先，您应该了解以下类型关系：
+
+| 数据属性 | **C++类型** | **JavaScript 类型数组** | **垫子（Mat）类型** |
+| :------- | :---------- | :---------------------- | :------------------ |
+| data     | uchar       | Uint8Array              | CV_8U               |
+| data8S   | char        | Int8Array               | CV_8S               |
+| data16U  | ushort      | Uint16Array             | CV_16U              |
+| data16S  | short       | Int16Array              | CV_16S              |
+| data32S  | int         | Int32Array              | CV_32S              |
+| data32F  | float       | Float32Array            | CV_32F              |
+| data64F  | double      | Float64Array            | CV_64F              |
+
+**1、数据**
+
+```js
+let row = 3, col = 4;
+let src = cv.imread("canvasInput");
+if (src.isContinuous()) {
+    let R = src.data[row * src.cols * src.channels() + col * src.channels()];
+    let G = src.data[row * src.cols * src.channels() + col * src.channels() + 1];
+    let B = src.data[row * src.cols * src.channels() + col * src.channels() + 2];
+    let A = src.data[row * src.cols * src.channels() + col * src.channels() + 3];
+}
+```
+
+!>数据操作仅对连续 Mat 有效。你应该先使用 isContinu（） 进行检查。
+
+**2、at类型**
+
+| **垫子类型** | At 操作  |
+| ------------ | -------- |
+| CV_8U        | ucharAt  |
+| CV_8S        | charAt   |
+| CV_16U       | ushortAt |
+| CV_16S       | shortAt  |
+| CV_32S       | intAt    |
+| CV_32F       | floatAt  |
+| CV_64F       | doubleAt |
+
+```js
+let row = 3, col = 4;
+let src = cv.imread("canvasInput");
+let R = src.ucharAt(row, col * src.channels());
+let G = src.ucharAt(row, col * src.channels() + 1);
+let B = src.ucharAt(row, col * src.channels() + 2);
+let A = src.ucharAt(row, col * src.channels() + 3);
+```
+
+!>at 操作仅适用于单通道访问，无法修改该值。
+
+**3、PTR**
+
+| **垫子类型** | **PTR 操作** | **JavaScript 类型数组** |
+| ------------ | ------------ | ----------------------- |
+| CV_8U        | ucharPtr     | Uint8Array              |
+| CV_8S        | charPtr      | Int8Array               |
+| CV_16U       | ushortPtr    | Uint16Array             |
+| CV_16S       | shortPtr     | Int16Array              |
+| CV_32S       | intPtr       | Int32Array              |
+| CV_32F       | floatPtr     | Float32Array            |
+| CV_64F       | doublePtr    | Float64Array            |
+
+```js
+let row = 3, col = 4;
+let src = cv.imread("canvasInput");
+let pixel = src.ucharPtr(row, col);
+let R = pixel[0];
+let G = pixel[1];
+let B = pixel[2];
+let A = pixel[3];
+```
+
+`mat.ucharPtr(K)` 获取 mat。`ucharPtr(i , j)`获取 mat 的第 i 行和第 j 列。
+
+**图像投资回报率**
+
+有时，您将不得不使用某些区域的图像。对于图像中的眼睛检测，首先在整个图像中进行人脸检测，当获得人脸时，我们单独选择人脸区域并搜索其中的眼睛，而不是搜索整个图像。它提高了准确性（因为眼睛总是盯着脸）和性能（因为我们搜索一个小区域）
+
+我们使用函数：`roi (rect)`        
+
+**参数：**  rect：矩形感兴趣区域
+
+**图像投资回报率示例**
+
+在`<canvas>`画布中已准备好名为 **canvasInput** 和 **canvasOutput** 的元素。
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+// 你可以尝试更多不同的参数
+let rect = new cv.Rect(100, 100, 200, 200);
+dst = src.roi(rect);
+cv.imshow('canvasOutput', dst);
+src.delete();
+dst.delete();
+
+```
+
+**拆分和合并图像通道**
+
+有时您需要在图像的 R、G、B 通道上单独工作。然后，您需要将RGB图像拆分为单个平面。或者其他时候，您可能需要将这些单独的通道加入 RGB 图像。
+
+```js
+let src = cv.imread("canvasInput");
+let rgbaPlanes = new cv.MatVector();
+// 劈开垫子
+cv.split(src, rgbaPlanes);
+// 获取R通道
+let R = rgbaPlanes.get(0);
+// 合并所有通道
+cv.merge(rgbaPlanes, src);
+src.delete(); rgbaPlanes.delete(); R.delete();
+```
+
+!>当你不想再使用它们时，不要忘记删除[`cv.Mat`](https://docs.opencv.org/3.3.1/d3/d63/classcv_1_1Mat.html)，`cv.MatVector`和`R（你从MatVector获得的垫子）`。
+
+**为图像制作边框（填充）**
+
+如果你想在图像周围创建一个边框，比如相框，你可以使用 `cv.copyMakeBorder( )` 函数。但它在卷积操作、零填充等方面有更多的应用。此函数采用以下参数：
+
+| 参数                     | 参数解释                                 |
+| ------------------------ | ---------------------------------------- |
+| src                      | 输入图像源                               |
+| top、bottom、left、right | 相应方向上像素数的边框宽度               |
+| borderType               | 定义要添加的边框类型的标志。见下表。     |
+| value                    | 边框类型为cv.BORDER_CONSTANT时边框的颜色 |
+
+`borderType`类型标志：
+
+| 类型                                       | 类型解释                                     |
+| ------------------------------------------ | -------------------------------------------- |
+| cv.BORDER_CONSTANT                         | 添加恒定的彩色边框。该值应作为下一个参数给出 |
+| cv.BORDER_REFLECT                          | 边框将是边框元素的镜像反射                   |
+| cv.BORDER_REFLECT_101或者cv.BORDER_DEFAULT | 同上，但略有变化                             |
+| cv.BORDER_REPLICATE                        | 最后一个元素被复制到整个元素                 |
+| cv.BORDER_WRAP                             | 无法解释                                     |
+
+**图像填充示例**
+
+在<canvas>中已准备好名为 canvasInput 和 canvasOutput 的元素。
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+// 你可以尝试更多不同的参数
+let s = new cv.Scalar(255, 0, 0, 255);
+cv.copyMakeBorder(src, dst, 10, 10, 10, 10, cv.BORDER_CONSTANT, s);
+cv.imshow('canvasOutput', dst);
+src.delete();
+dst.delete();
+```
+
+
+
+## 图像的算术运算
+
+对图像执行算术运算。
+
+## 数据结构
+
+了解一些数据结构。
+
+# 图像处理
+
+在本节中，您将学习OpenCV中的不同图像处理功能。
+
+# 视频分析
+
+在本节中，您将学习使用对象跟踪等视频的不同技术。
+
+# 物体检测
+
+在本节中，您将使用人脸检测等对象检测技术。
