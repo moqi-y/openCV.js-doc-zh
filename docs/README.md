@@ -704,7 +704,7 @@ dst.delete();
 
 **图像添加**
 
-您可以通过 OpenCV 函数`cv.add( )`添加两个图像。res = img1 + img2。两个图像应具有相同的深度和类型。
+您可以通过 OpenCV 函数 `cv.add( )`添加两个图像。res = img1 + img2。两个图像应具有相同的深度和类型。
 
 例如，请参考以下示例：
 
@@ -720,7 +720,7 @@ src1.delete(); src2.delete(); dst.delete(); mask.delete();
 
 **图像减法**
 
-您可以通过OpenCV函数`cv.subtract( )`减去两张图像。res = img1 - img2.两个图像应具有相同的深度和类型。
+您可以通过OpenCV函数 `cv.subtract( )`减去两张图像。res = img1 - img2.两个图像应具有相同的深度和类型。
 
 例如，请参考以下示例：
 
@@ -784,9 +784,6 @@ src.delete(); dst.delete(); logo.delete(); roi.delete(); mask.delete();
 maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
 ```
 
-
-
-
 ## 数据结构
 
 了解一些数据结构。您将学习一些数据结构：**点**，**标量**，**宽高尺寸**，**圆形**，矩形，**旋转矩形**等。
@@ -827,7 +824,7 @@ let scalar = [R, G, B, Alpha];
 
 **宽高尺寸**
 
-有两种方法可以构造大小，它们是相同的：
+有两种方法可以构造宽高尺寸，它们是相同的：
 
 ```js
 // 第一种方式
@@ -886,10 +883,10 @@ let rotatedRect = new cv.RotatedRect(center, size, angle);
 let rotatedRect = {center : center, size : size, angle : angle};
 ```
 
-| 参数   | 参数解释                                                     |
-| ------ | ------------------------------------------------------------ |
-| center | 矩形质量中心。                                               |
-| size   | 矩形的宽度和高度。                                           |
+| 参数   | 参数解释                                                                |
+| ------ | ----------------------------------------------------------------------- |
+| center | 矩形质量中心。                                                          |
+| size   | 矩形的宽度和高度。                                                      |
 | angle  | 顺时针方向的旋转角度。当角度为 0、90、180、270 等时，矩形变为直立矩形。 |
 
 **从 rotatedRect 获取顶点：**
@@ -916,11 +913,163 @@ let point4 = vertices[3];
 let boundingRect = cv.RotatedRect.boundingRect(rotatedRect);
 ```
 
-
-
 # 图像处理
 
 在本节中，您将学习OpenCV中的不同图像处理功能。
+
+## 更改色彩空间
+
+了解如何在不同色彩空间之间更改图像。
+
+OpenCV 中提供了 150 多种颜色空间转换方法。但是我们将研究使用最广泛的一个：RGB↔灰色。
+
+我们使用函数：`cv.cvtColor （src， dst， code， dstCn = 0）`
+
+| 参数  | 参数解释                                                     |
+| ----- | ------------------------------------------------------------ |
+| src   | 输入图像。                                                   |
+| dst   | 输出与输入图像相同大小和深度的图像                           |
+| code  | 色彩空间转换代码（参见 **[cv.颜色转换代码](https://docs.opencv.org/3.3.1/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0)**）。 |
+| dstCn | 目标图像中的通道数;如果参数为 0，则通道数自动从 输入图像和代码派生。 |
+
+对于 RGB→灰色转换我们使用代码`cv.COLOR_RGBA2GRAY`。
+
+**转换颜色示例**
+
+在`<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+// 你可以尝试更多不同的参数
+cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete();
+```
+
+**范围之内**
+
+检查数组元素是否位于其他两个数组的元素之间。
+
+我们使用函数：`cv.inRange （src， lowerb， upperb， dst）`
+
+| 参数   | 参数解释                                         |
+| ------ | ------------------------------------------------ |
+| src    | 第一个输入图像。                                 |
+| lowerb | 包含与 第一个输入图像 相同大小的下边界Mat。      |
+| upperb | 包含与 第一个输入图像 大小相同的上边界Mat。      |
+| dst    | 输出图像大小与第一个输入图像相同，cv.CV_8U类型。 |
+
+**图像范围示例**
+
+在`<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+let low = new cv.Mat(src.rows, src.cols, src.type(), [0, 0, 0, 0]);
+let high = new cv.Mat(src.rows, src.cols, src.type(), [150, 150, 150, 255]);
+// 你可以尝试更多不同的参数
+cv.inRange(src, low, high, dst);
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); low.delete(); high.delete();
+```
+
+
+
+## *图像的几何变换
+
+了解如何对图像应用不同的几何变换，如旋转、平移等。
+
+
+
+## 图像阈值
+
+了解如何使用全局阈值、自适应阈值、Otsu 二值化等将图像转换为二进制图像。
+
+## 平滑图像
+
+了解如何模糊图像，使用自定义内核过滤图像等。
+
+
+
+## 形态转化
+
+了解形态转变，如侵蚀、扩张、打开、关闭等。
+
+
+
+## 图像渐变
+
+了解如何查找图像渐变、边缘等。
+
+
+
+## 精明边缘检测
+
+了解如何使用Canny Edge Detection查找边缘。
+
+
+
+## 图像金字塔
+
+了解图像金字塔以及如何使用它们进行图像混合。
+
+
+
+## OpenCV中的轮廓.js
+
+了解 OpenCV.js 中的轮廓。
+
+
+
+## OpenCV中的直方图.js
+
+了解 OpenCV.js 中的直方图。
+
+
+
+## OpenCV中的图像转换.js
+
+在OpenCV中学习不同的图像变换.js如傅里叶变换，余弦变换等。
+
+
+
+## 模板匹配
+
+了解如何使用模板匹配在图像中搜索对象。
+
+
+
+## 霍夫线变换
+
+了解如何检测图像中的线条。
+
+
+
+## 霍夫圆变换
+
+了解如何检测图像中的圆圈。
+
+
+
+## 基于分水岭算法的图像分割
+
+了解如何使用流域分割对影像进行分割。
+
+
+
+## 使用 GrabCut 算法进行前景提取
+
+了解如何使用 GrabCut 算法提取前景。
+
+
+
+## 用于视频捕获的图像处理
+
+学习视频捕获的图像处理。
+
+
 
 # 视频分析
 
