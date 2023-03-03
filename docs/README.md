@@ -45,7 +45,7 @@ Mohammad Reza Haghighat（英特尔公司项目发起人和赞助商）
 
 ## 下载OpenCV.js
 
-在本教程中，您将学习如何在网页中开始使用OpenCV.js。您可以在每个版本中获取副本，或者只需从`https://docs.opencv.org/{版本号}/opencv.js`（例如：[https://docs.opencv.org/3.4.0/opencv.js](https://docs.opencv.org/3.4.0/opencv.js)，如果需要最新版本，请使用）。您还可以按照教程构建 OpenCV.js 构建自己的副本。opencv.jsopencv.jsopencv-{版本号}-docs.zip3.4
+在本教程中，您将学习如何在网页中开始使用OpenCV.js。您可以在每个版本中获取副本，或者只需从 `https://docs.opencv.org/{版本号}/opencv.js`（例如：[https://docs.opencv.org/3.4.0/opencv.js](https://docs.opencv.org/3.4.0/opencv.js)，如果需要最新版本，请使用）。您还可以按照教程构建 OpenCV.js 构建自己的副本。opencv.jsopencv.jsopencv-{版本号}-docs.zip3.4
 
 ## 第一步：创建网页
 
@@ -85,7 +85,7 @@ inputElement.addEventListener("change", (e) => {
 
 <script src=“opencv.js” type=“text/javascript”></script>
 
-您可能希望在 <script> 标记中按属性异步加载。要在准备就绪时收到通知，您可以注册对属性的回调。opencv.js async opencv.js onload
+您可能希望在 `<script>` 标记中按属性异步加载。要在准备就绪时收到通知，您可以注册对属性的回调。opencv.js async opencv.js onload
 
 **异步加载示例**
 
@@ -223,13 +223,13 @@ canvas.height = imgData.height;
 ctx.putImageData(imgData, 0, 0);
 ```
 
-我们使用`cv.imread（imageSource）`从html画布或img元素中读取图像。
+我们使用 `cv.imread（imageSource）`从html画布或img元素中读取图像。
 
 **参数**:imageSource:	画布元素或 ID，或 IMG 元素或 ID。
 
 **返回值：**通道以 RGBA 顺序存储。
 
-我们使用`cv.imshow（canvasSource，mat）`来显示它。该函数可能会缩放mat，具体取决于其深度：
+我们使用 `cv.imshow（canvasSource，mat）`来显示它。该函数可能会缩放mat，具体取决于其深度：
 
 如果 mat 是 8 位无符号的，它将按原样显示。
 如果mat 是 16 位无符号或 32 位整数，则像素除以 256。也就是说，值范围 [0，255*256] 映射到 [0，255]。
@@ -366,8 +366,6 @@ function processVideo() {
 setTimeout(processVideo, 0);
 ```
 
-
-
 ## 向应用程序添加跟踪栏
 
 创建跟踪栏以控制某些参数
@@ -385,16 +383,16 @@ let src2 = cv.imread('canvasInput2');
 
 <input type="range">
 
-!>`type=“range”` 的` <input> `属性在 Internet Explorer 9 和更早版本中不支持。
+!>`type=“range”` 的 `<input>`属性在 Internet Explorer 9 和更早版本中不支持。
 
-您可以使用 `document.createElement()`方法创建一个 type=“range” 的` <input> `元素：
+您可以使用 `document.createElement()`方法创建一个 type=“range” 的 `<input>`元素：
 
 ```js
 let x = document.createElement('INPUT');
 x.setAttribute('type', 'range');
 ```
 
-您也可以使用`getElementById()`访问type="range"的`<input>`元素：
+您也可以使用 `getElementById()`访问type="range"的 `<input>`元素：
 
 ```js
 let x = document.getElementById('myRange');
@@ -520,12 +518,12 @@ src.copyTo(dst, mask);
 
 我们使用函数：`convertTo（m， rtype， alpha = 1， beta = 0）`
 
-| 参数  | 参数说明                                                     |
-| :---- | ------------------------------------------------------------ |
-| m     | 输出矩阵;如果在操作之前没有适当的大小或类型，则会重新分配它。 |
+| 参数  | 参数说明                                                                                                                 |
+| :---- | ------------------------------------------------------------------------------------------------------------------------ |
+| m     | 输出矩阵;如果在操作之前没有适当的大小或类型，则会重新分配它。                                                            |
 | rtype | 所需的输出矩阵类型，或者更确切地说，深度，因为通道数与输入相同;如果 rtype 为负，则输出矩阵的类型将与输入矩阵的类型相同。 |
-| alpha | 可选比例因子。默认：1                                        |
-| beta  | 添加到缩放值的可选增量。默认：0                              |
+| alpha | 可选比例因子。默认：1                                                                                                    |
+| beta  | 添加到缩放值的可选增量。默认：0                                                                                          |
 
 ```js
 src.convertTo(dst, rtype);
@@ -551,14 +549,14 @@ mat.delete(); matVec.delete(); cnt.delete();
 首先，您应该了解以下类型关系：
 
 | 数据属性 | **C++类型** | **JavaScript 类型数组** | **垫子（Mat）类型** |
-| :------- | :---------- | :---------------------- | :------------------ |
-| data     | uchar       | Uint8Array              | CV_8U               |
-| data8S   | char        | Int8Array               | CV_8S               |
-| data16U  | ushort      | Uint16Array             | CV_16U              |
-| data16S  | short       | Int16Array              | CV_16S              |
-| data32S  | int         | Int32Array              | CV_32S              |
-| data32F  | float       | Float32Array            | CV_32F              |
-| data64F  | double      | Float64Array            | CV_64F              |
+| :------- | :---------------- | :---------------------------- | :------------------------ |
+| data     | uchar             | Uint8Array                    | CV_8U                     |
+| data8S   | char              | Int8Array                     | CV_8S                     |
+| data16U  | ushort            | Uint16Array                   | CV_16U                    |
+| data16S  | short             | Int16Array                    | CV_16S                    |
+| data32S  | int               | Int32Array                    | CV_32S                    |
+| data32F  | float             | Float32Array                  | CV_32F                    |
+| data64F  | double            | Float64Array                  | CV_64F                    |
 
 **1、数据**
 
@@ -578,14 +576,14 @@ if (src.isContinuous()) {
 **2、at类型**
 
 | **垫子类型** | At 操作  |
-| ------------ | -------- |
-| CV_8U        | ucharAt  |
-| CV_8S        | charAt   |
-| CV_16U       | ushortAt |
-| CV_16S       | shortAt  |
-| CV_32S       | intAt    |
-| CV_32F       | floatAt  |
-| CV_64F       | doubleAt |
+| ------------------ | -------- |
+| CV_8U              | ucharAt  |
+| CV_8S              | charAt   |
+| CV_16U             | ushortAt |
+| CV_16S             | shortAt  |
+| CV_32S             | intAt    |
+| CV_32F             | floatAt  |
+| CV_64F             | doubleAt |
 
 ```js
 let row = 3, col = 4;
@@ -601,14 +599,14 @@ let A = src.ucharAt(row, col * src.channels() + 3);
 **3、PTR**
 
 | **垫子类型** | **PTR 操作** | **JavaScript 类型数组** |
-| ------------ | ------------ | ----------------------- |
-| CV_8U        | ucharPtr     | Uint8Array              |
-| CV_8S        | charPtr      | Int8Array               |
-| CV_16U       | ushortPtr    | Uint16Array             |
-| CV_16S       | shortPtr     | Int16Array              |
-| CV_32S       | intPtr       | Int32Array              |
-| CV_32F       | floatPtr     | Float32Array            |
-| CV_64F       | doublePtr    | Float64Array            |
+| ------------------ | ------------------ | ----------------------------- |
+| CV_8U              | ucharPtr           | Uint8Array                    |
+| CV_8S              | charPtr            | Int8Array                     |
+| CV_16U             | ushortPtr          | Uint16Array                   |
+| CV_16S             | shortPtr           | Int16Array                    |
+| CV_32S             | intPtr             | Int32Array                    |
+| CV_32F             | floatPtr           | Float32Array                  |
+| CV_64F             | doublePtr          | Float64Array                  |
 
 ```js
 let row = 3, col = 4;
@@ -626,13 +624,13 @@ let A = pixel[3];
 
 有时，您将不得不使用某些区域的图像。对于图像中的眼睛检测，首先在整个图像中进行人脸检测，当获得人脸时，我们单独选择人脸区域并搜索其中的眼睛，而不是搜索整个图像。它提高了准确性（因为眼睛总是盯着脸）和性能（因为我们搜索一个小区域）
 
-我们使用函数：`roi (rect)`        
+我们使用函数：`roi (rect)`
 
 **参数：**  rect：矩形感兴趣区域
 
 **图像投资回报率示例**
 
-在`<canvas>`画布中已准备好名为 **canvasInput** 和 **canvasOutput** 的元素。
+在 `<canvas>`画布中已准备好名为 **canvasInput** 和 **canvasOutput** 的元素。
 
 ```js
 let src = cv.imread('canvasInput');
@@ -662,7 +660,7 @@ cv.merge(rgbaPlanes, src);
 src.delete(); rgbaPlanes.delete(); R.delete();
 ```
 
-!>当你不想再使用它们时，不要忘记删除[`cv.Mat`](https://docs.opencv.org/3.3.1/d3/d63/classcv_1_1Mat.html)，`cv.MatVector`和`R（你从MatVector获得的垫子）`。
+!>当你不想再使用它们时，不要忘记删除[`cv.Mat`](https://docs.opencv.org/3.3.1/d3/d63/classcv_1_1Mat.html)，`cv.MatVector`和 `R（你从MatVector获得的垫子）`。
 
 **为图像制作边框（填充）**
 
@@ -687,7 +685,7 @@ src.delete(); rgbaPlanes.delete(); R.delete();
 
 **图像填充示例**
 
-在<canvas>中已准备好名为 canvasInput 和 canvasOutput 的元素。
+在`<canvas>`中已准备好名为 canvasInput 和 canvasOutput 的元素。
 
 ```js
 let src = cv.imread('canvasInput');
@@ -699,8 +697,6 @@ cv.imshow('canvasOutput', dst);
 src.delete();
 dst.delete();
 ```
-
-
 
 ## 图像的算术运算
 
