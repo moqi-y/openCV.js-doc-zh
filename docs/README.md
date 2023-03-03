@@ -789,7 +789,128 @@ maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
 
 ## 数据结构
 
-了解一些数据结构。
+了解一些数据结构。您将学习一些数据结构：**点**，**标量**，**大小**，**圆形**，矩形，**旋转矩形**等。
+
+**点**
+有两种方法可以构造一个点，它们是相同的：
+
+```js
+// 第一种方式
+let point = new cv.Point(x, y);
+// 第二种方式
+let point = {x: x, y: y};
+```
+
+| 参数 | 参数解释                            |
+| ---- | ----------------------------------- |
+| x    | 点的 x轴 坐标。（原点为图片左上角） |
+| y    | 点的 y 轴坐标。                     |
+
+**标量**
+有两种方法可以构造标量，它们是相同的：
+
+```js
+// 第一种方式
+let scalar = new cv.Scalar(R, G, B, Alpha);
+// 第二种方式
+let scalar = [R, G, B, Alpha];
+```
+
+| 参数  | 参数解释             |
+| ----- | -------------------- |
+| R     | 红色通道的像素值。   |
+| G     | 绿色通道的像素值。   |
+| B     | 蓝色通道的像素值。   |
+| Alpha | 阿尔法通道的像素值。 |
+
+**宽高尺寸**
+有两种方法可以构造大小，它们是相同的：
+
+```js
+// 第一种方式
+let size = new cv.Size(width, height);
+// 第二种方式
+let size = {width : width, height : height};
+```
+
+| 参数   | 参数解释 |
+| ------ | -------- |
+| width  | 宽度     |
+| height | 高度     |
+
+**圆圈**
+有两种方法可以构造圆，它们是相同的：
+
+```js
+// 第一种方式
+let circle = new cv.Circle(center, radius);
+// 第二种方式
+let circle = {center : center, radius : radius};
+```
+
+| 参数   | 参数解释 |
+| ------ | -------- |
+| center | 圆心     |
+| radius | 圆的半径 |
+
+**矩形**
+构造 Rect 有两种方法，它们是相同的：
+
+```js
+// 第一种方式
+let rect = new cv.Rect(x, y, width, height);
+// 第二种方式
+let rect = {x : x, y : y, width : width, height : height};
+```
+
+| 参数   | 参数解释                        |
+| ------ | ------------------------------- |
+| x      | 顶点的 x 坐标，即矩形的左上角。 |
+| y      | 顶点的 y 坐标，即矩形的左上角。 |
+| width  | 矩形的宽度。                    |
+| height | 矩形的高度。                    |
+
+**旋转矩形**
+有两种方法可以构造旋转矩形，它们是相同的：
+
+```js
+// 第一种方式
+let rotatedRect = new cv.RotatedRect(center, size, angle);
+// 第二种方式
+let rotatedRect = {center : center, size : size, angle : angle};
+```
+
+| 参数   | 参数解释                                                     |
+| ------ | ------------------------------------------------------------ |
+| center | 矩形质量中心。                                               |
+| size   | 矩形的宽度和高度。                                           |
+| angle  | 顺时针方向的旋转角度。当角度为 0、90、180、270 等时，矩形变为直立矩形。 |
+
+**从 rotatedRect 获取顶点：**
+
+我们使用函数：`cv.RotatedRect.points（rotatedRect）`
+
+**rotatedRect**：旋转矩形
+
+```js
+let vertices = cv.RotatedRect.points(rotatedRect);
+let point1 = vertices[0];
+let point2 = vertices[1];
+let point3 = vertices[2];
+let point4 = vertices[3];
+```
+
+**从 rotatedRect 获取边框：**
+
+我们使用函数：`cv.RotatedRect.boundingRect（rotatedRect）`
+
+**rotatedRect**：旋转矩形
+
+```js
+let boundingRect = cv.RotatedRect.boundingRect(rotatedRect);
+```
+
+
 
 # 图像处理
 
