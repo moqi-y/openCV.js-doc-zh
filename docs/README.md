@@ -792,6 +792,7 @@ maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
 了解一些数据结构。您将学习一些数据结构：**点**，**标量**，**大小**，**圆形**，矩形，**旋转矩形**等。
 
 **点**
+
 有两种方法可以构造一个点，它们是相同的：
 
 ```js
@@ -807,6 +808,7 @@ let point = {x: x, y: y};
 | y    | 点的 y 轴坐标。                     |
 
 **标量**
+
 有两种方法可以构造标量，它们是相同的：
 
 ```js
@@ -824,6 +826,7 @@ let scalar = [R, G, B, Alpha];
 | Alpha | 阿尔法通道的像素值。 |
 
 **宽高尺寸**
+
 有两种方法可以构造大小，它们是相同的：
 
 ```js
@@ -839,6 +842,7 @@ let size = {width : width, height : height};
 | height | 高度     |
 
 **圆圈**
+
 有两种方法可以构造圆，它们是相同的：
 
 ```js
@@ -854,6 +858,7 @@ let circle = {center : center, radius : radius};
 | radius | 圆的半径 |
 
 **矩形**
+
 构造 Rect 有两种方法，它们是相同的：
 
 ```js
@@ -871,6 +876,7 @@ let rect = {x : x, y : y, width : width, height : height};
 | height | 矩形的高度。                    |
 
 **旋转矩形**
+
 有两种方法可以构造旋转矩形，它们是相同的：
 
 ```js
