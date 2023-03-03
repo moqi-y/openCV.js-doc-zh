@@ -4,16 +4,20 @@
 
 旨在帮助和我一样初次接触OpenCV.js的前端小伙伴快速上手，免去因阅读英文文档带来的阅读障碍；
 
+
+
 **如何使用：**
 
 打开OpenCV.js中文文档网站：[OpenCV.js (中文文档)](https://opencv.moqi.ml/#/ "点击打开网站")
+
+
 
 **如何参与精简版OpenCV.js文档翻译？**
 
 **第一步：克隆该项目**
 
 ```
-git@github.com:moqi-y/openCV.js-doc-zh.git
+git clone git@github.com:moqi-y/openCV.js-doc-zh.git
 ```
 
 **第二步：下载本地运行服务器live-server，用于查看编辑效果**
