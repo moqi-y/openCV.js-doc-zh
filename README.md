@@ -24,7 +24,7 @@ npm install -g live-server
 
 **第三步：在本地资源管理器打开项目目录，找到 `index.html`文件所在目录，文件路径`openCV-doc-zh/docs/index.html`**
 
-**第四步：在当前目录（`openCV-doc-zh/docs/`）运行cmd窗口，在cmd窗口输入 `live-server`命令，运行本地服务器例如：**
+**第四步：在当前目录（`openCV-doc-zh/docs/`）运行cmd窗口，在cmd窗口输入 `live-server`命令，运行本地服务器，例如：**
 
 E:\mycode\openCV-doc-zh\docs>live-server
 

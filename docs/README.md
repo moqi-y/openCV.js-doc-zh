@@ -685,7 +685,7 @@ src.delete(); rgbaPlanes.delete(); R.delete();
 
 **图像填充示例**
 
-在`<canvas>`中已准备好名为 canvasInput 和 canvasOutput 的元素。
+在 `<canvas>`中已准备好名为 canvasInput 和 canvasOutput 的元素。
 
 ```js
 let src = cv.imread('canvasInput');
@@ -701,6 +701,91 @@ dst.delete();
 ## 图像的算术运算
 
 对图像执行算术运算。
+
+**图像添加**
+
+您可以通过 OpenCV 函数`cv.add( )`添加两个图像。res = img1 + img2。两个图像应具有相同的深度和类型。
+
+例如，请参考以下示例：
+
+```js
+let src1 = cv.imread("canvasInput1");
+let src2 = cv.imread("canvasInput2");
+let dst = new cv.Mat();
+let mask = new cv.Mat();
+let dtype = -1;
+cv.add(src1, src2, dst, mask, dtype);
+src1.delete(); src2.delete(); dst.delete(); mask.delete();
+```
+
+**图像减法**
+
+您可以通过OpenCV函数`cv.subtract( )`减去两张图像。res = img1 - img2.两个图像应具有相同的深度和类型。
+
+例如，请参考以下示例：
+
+```js
+let src1 = cv.imread("canvasInput1");
+let src2 = cv.imread("canvasInput2");
+let dst = new cv.Mat();
+let mask = new cv.Mat();
+let dtype = -1;
+cv.subtract(src1, src2, dst, mask, dtype);
+src1.delete(); src2.delete(); dst.delete(); mask.delete();
+```
+
+**按位运算**
+
+这包括按位 AND、OR、NOT 和 XOR 运算。在提取图像的任何部分、定义和使用非矩形 ROI 等时，它们将非常有用。下面我们将看到一个关于如何更改图像的特定区域的示例。
+
+我想把OpenCV标志放在图像上方。如果我添加两个图像，它会改变颜色。如果我混合它，我会得到透明效果。但我希望它是不透明的。如果它是一个矩形区域，我可以像上一章一样使用 ROI。但OpenCV标志不是一个矩形的形状。因此，您可以使用按位运算来做到这一点。
+
+**图像按位示例**
+
+在 `<canvas>`中已准备好名为 canvasInput 和 canvasOutput 的元素。
+
+```js
+let src = cv.imread('imageCanvasInput');
+let logo = cv.imread('logoCanvasInput');
+let dst = new cv.Mat();
+let roi = new cv.Mat();
+let mask = new cv.Mat();
+let maskInv = new cv.Mat();
+let imgBg = new cv.Mat();
+let imgFg = new cv.Mat();
+let sum = new cv.Mat();
+let rect = new cv.Rect(0, 0, logo.cols, logo.rows);
+
+// 我想把标志（logo）放在左上角，所以我创建了一个ROI
+roi = src.roi(rect);
+
+// 创建一个logo的蒙版，并创建它的逆蒙层
+cv.cvtColor(logo, mask, cv.COLOR_RGBA2GRAY, 0);
+cv.threshold(mask, mask, 100, 255, cv.THRESH_BINARY);
+cv.bitwise_not(mask, maskInv);
+
+// 将ROI中的logo区域涂黑
+cv.bitwise_and(roi, roi, imgBg, maskInv);
+
+// 从logo图像中仅取出logo区域
+cv.bitwise_and(logo, logo, imgFg, mask);
+
+// 将logo放在ROI中并修改主图像
+cv.add(imgBg, imgFg, sum);
+
+dst = src.clone();
+for (let i = 0; i < logo.rows; i++) {
+    for (let j = 0; j < logo.cols; j++) {
+        dst.ucharPtr(i, j)[0] = sum.ucharPtr(i, j)[0];
+    }
+}
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); logo.delete(); roi.delete(); mask.delete();
+maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
+```
+
+
+
 
 ## 数据结构
 
