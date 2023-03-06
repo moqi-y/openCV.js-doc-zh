@@ -977,13 +977,166 @@ src.delete(); dst.delete(); low.delete(); high.delete();
 
 
 
-## *图像的几何变换
+## 图像的几何变换
 
 了解如何对图像应用不同的几何变换，如旋转、平移等。
 
+**缩放**
+
+缩放只是调整图像的大小。OpenCV为此附带了一个函数`cv.resize（）`。可以手动指定图像的大小，也可以指定比例因子。使用不同的插值方法。优选的插值方法是`cv.INTER_AREA`用于收缩，`cv.INTER_CUBIC（slow）`和cv.INTER_LINEAR用于缩放。
+
+我们使用函数：`cv.resize （src， dst， dsize， fx = 0， fy = 0， interpolation = cv.INTER_LINEAR）`
+
+| 参数          | 参数解释                                                     |
+| ------------- | ------------------------------------------------------------ |
+| src           | 输入图像                                                     |
+| dst           | 输出图像;它的大小为dsize（当它不为零时）或从src.size（），fx和fy计算的大小;DST 的类型与 src的类型相同。 |
+| dsize         | 输出图像大小。                                               |
+| fx            | 沿横轴的比例因子。                                           |
+| fy            | 沿纵轴的比例因子。                                           |
+| interpolation | 插值方法（参见 **[cv.插值标志）](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)**)。 |
+
+**图像大小调整示例**
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+let dsize = new cv.Size(300, 300);
+// 你可以尝试更多不同的参数
+cv.resize(src, dst, dsize, 0, 0, cv.INTER_AREA);
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete();
+```
+
+**变换**
+
+变换是物体位置的转移。
+
+我们使用函数：`cv.warpAffine （src， dst， M， dsize， flags = cv.INTER_LINEAR， borderMode = cv.BORDER_CONSTANT， borderValue = new cv.Scalar（））`
+
+| 参数        | 参数解释                                                     |
+| ----------- | ------------------------------------------------------------ |
+| src         | 输入图像。                                                   |
+| dst         | 输出大小为 dsize 且类型与 src 相同的图像。                   |
+| Mat         | 2 × 3 转换矩阵（cv.CV_64FC1 型）。                           |
+| dsize       | 输出图像的大小。                                             |
+| flags       | 插值方法（参见[cv.InterpolationFlags](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)）和可选标志WARP_INVERSE_MAP的组合，这意味着M是逆变换（dst→src） |
+| borderMode  | 像素外推法（见[cv.BorderTypes](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#ga209f2f4869e304c82d07739337eae7c5)）;当borderMode=BORDER_TRANSPARENT时，表示目标图像中与源图像中的“异常值”对应的像素不会被函数修改。 |
+| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。              |
+
+**仿射变换示例**
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+let M = cv.matFromArray(2, 3, cv.CV_64FC1, [1, 0, 50, 0, 1, 100]);
+let dsize = new cv.Size(src.rows, src.cols);
+// 你可以尝试更多不同的参数
+cv.warpAffine(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); M.delete();
+```
+
+**旋转**
+
+旋转图像的角度θ通过表单的变换矩阵实现。但是 OpenCV 提供缩放旋转和可调节旋转中心，因此您可以在您喜欢的任何位置旋转。
+
+我们使用函数：`cv.getRotationMatrix2D （center, angle, scale）`
+
+| 参数   | 参数解释                                                     |
+| ------ | ------------------------------------------------------------ |
+| center | 源图像中旋转的中心。                                         |
+| angle  | 旋转角度（以度为单位）。正值表示逆时针旋转（假定坐标原点为左上角）。 |
+| scale  | 各向同性比例因子。                                           |
+
+**旋转变换示例**
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+let dsize = new cv.Size(src.rows, src.cols);
+let center = new cv.Point(src.cols / 2, src.rows / 2);
+// 你可以尝试更多不同的参数
+let M = cv.getRotationMatrix2D(center, 45, 1);
+cv.warpAffine(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); M.delete();
+```
+
+**仿射变换**
+
+在仿射变换中，原始图像中的所有平行线在输出图像中仍将平行。要找到转换矩阵，我们需要输入图像中的三个点及其在输出图像中的相应位置。然后`cv.getAffineTransform`将创建一个2x3矩阵，该矩阵将传递给`cv.warpAffine`。
+
+我们使用函数：`cv.getAffineTransform（src，dst）`
+
+| 参数 | 参数解释                                                  |
+| ---- | --------------------------------------------------------- |
+| src  | 来自输入图像的三个点（[3， 1] 大小和cv.CV_32FC2类型）。   |
+| dst  | 输出图像中的三个对应点（[3， 1] 大小和cv.CV_32FC2类型）。 |
+
+**获取仿射变换示例**
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+// (data32F[0], data32F[1]) 是第一个点
+// (data32F[2], data32F[3]) 是第二个点
+// (data32F[4], data32F[5]) 是第三个点
+let srcTri = cv.matFromArray(3, 1, cv.CV_32FC2, [0, 0, 0, 1, 1, 0]);
+let dstTri = cv.matFromArray(3, 1, cv.CV_32FC2, [0.6, 0.2, 0.1, 1.3, 1.5, 0.3]);
+let dsize = new cv.Size(src.rows, src.cols);
+let M = cv.getAffineTransform(srcTri, dstTri);
+// 你可以尝试更多不同的参数
+cv.warpAffine(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
+```
+
+**透视转换**
+
+对于透视转换，您需要一个 3x3 转换矩阵。即使在转换后，直线仍将保持直线。要找到此转换矩阵，您需要在输入图像上 4 个点和输出图像上的相应点。在这 4 点中，有 3 点不应该是共线的。然后可以通过函数 `cv.getPerspectiveTransform` 找到转换矩阵。然后将 `cv.warpPerspective` 与这个 3x3 转换矩阵一起应用。
+
+我们使用函数：`cv.warpPerspective （src， dst， M， dsize， flags = cv.INTER_LINEAR， borderMode = cv.BORDER_CONSTANT， borderValue = new cv.Scalar（））`
+
+| 参数        | 参数解释                                                     |
+| ----------- | ------------------------------------------------------------ |
+| src         | 输入图像。                                                   |
+| dst         | 输出大小为 dsize 且类型与 SRC 相同的图像。                   |
+| M           | 3 × 3 转换矩阵（cv.CV_64FC1 型）。                           |
+| dsize       | 输出图像的大小。                                             |
+| flags       | 插值方法（[cv.INTER_LINEAR](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#gga5bb5a1fea74ea38e1a5445ca803ff121ac97d8e4880d8b5d509e96825c7522deb) 或 [cv.INTER_NEAREST](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#gga5bb5a1fea74ea38e1a5445ca803ff121aa5521d8e080972c762467c45f3b70e6c)）和可选标志WARP_INVERSE_MAP的组合，将 M 设置为逆变换 （dst→src）。 |
+| borderMode  | 像素外推法（[cv.BORDER_CONSTANT](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aed2e4346047e265c8c5a6d0276dcd838)或[cv.BORDER_REPLICATE](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aa1de4cff95e3377d6d0cbe7569bd4e9f)）。 |
+| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。              |
+
+`cv.getPerspectiveTransform （src， dst）`
+
+| 参数 | 参数解释                         |
+| ---- | -------------------------------- |
+| src  | 源图像中四边形顶点的坐标。       |
+| dst  | 目标图像中相应四边形顶点的坐标。 |
+
+**透视变换示例**
+
+```js
+let src = cv.imread('canvasInput');
+let dst = new cv.Mat();
+let dsize = new cv.Size(src.rows, src.cols);
+// (data32F[0], data32F[1]) 是第一个点
+// (data32F[2], data32F[3]) 是第二个点
+// (data32F[4], data32F[5]) 是第三个点
+// (data32F[6], data32F[7]) 是第四个点
+let srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [56, 65, 368, 52, 28, 387, 389, 390]);
+let dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [0, 0, 300, 0, 0, 300, 300, 300]);
+let M = cv.getPerspectiveTransform(srcTri, dstTri);
+// 你可以尝试更多不同的参数
+cv.warpPerspective(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+cv.imshow('canvasOutput', dst);
+src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
+```
 
 
-## 图像阈值
+
+## *图像阈值
 
 了解如何使用全局阈值、自适应阈值、Otsu 二值化等将图像转换为二进制图像。
 
