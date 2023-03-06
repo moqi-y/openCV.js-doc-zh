@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 要加载库文件，否则找不到cv -->
+    <script src="opencv-3.4.0.js" type="text/javascript"></script>
+    <title>视频入门</title>
+</head>
+
+<body>
+    <h2>视频入门示例</h2>
+    <div>
+        <!-- 输入 -->
+        <video controls width="500" id="videoInput">
+            <source src="./resource/video.mp4" type="video/mp4">
+        </video>
+        <!-- 输出 -->
+        canvas输出：<canvas id="canvasOutput"></canvas>
+    </div>
+
+    <!-- <script type="text/javascript">
+        let videoElement = document.getElementById('videoInput'); //获取输入元素div用于cv.imread方法，或者直接在cv.imread用元素id
+        //等待图片资源加载完成后再读取该元素，否则报错。
+        videoElement.onload = function () {
+            let src = new cv.Mat(200, 200, cv.CV_8UC4);
+            let dst = new cv.Mat(200, 200, cv.CV_8UC1);
+            let cap = new cv.VideoCapture(videoElement);
+            const FPS = 30;
+            function processVideo() {
+                let begin = Date.now();
+                cap.read(src);
+                cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+                cv.imshow("canvasOutput", dst);
+                // 播放下一个
+                let delay = 1000 / FPS - (Date.now() - begin);
+                setTimeout(processVideo, delay);
+            }
+            // 播放第一个
+            setTimeout(processVideo, 0);
+
+        };
+    </script> -->
+
+</body>
+
+</html>
