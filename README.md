@@ -4,13 +4,11 @@
 
 旨在帮助和我一样初次接触OpenCV.js的前端小伙伴快速上手，免去因阅读英文文档带来的阅读障碍；
 
-
-
 **如何使用：**
 
-打开OpenCV.js中文文档网站：[OpenCV.js (中文文档)](https://opencv.moqi.ml/#/ "点击打开网站")
+1、打开OpenCV.js中文文档网站：[OpenCV.js (中文文档)](https://opencv.moqi.ml/#/ "点击打开网站")
 
-
+2、在该项目仓库中查看示例代码，示例代码文件夹 **`demo`** ,示例代码路径：`openCV-doc-zh/demo/xxx.html`
 
 **如何参与精简版OpenCV.js文档翻译？**
 
@@ -26,7 +24,7 @@ git clone git@github.com:moqi-y/openCV.js-doc-zh.git
 npm install -g live-server
 ```
 
-**第三步：在本地资源管理器打开项目目录，找到 `index.html`文件所在目录，文件路径`openCV-doc-zh/docs/index.html`**
+**第三步：在本地资源管理器打开项目目录，找到 `index.html`文件所在目录，文件路径 `openCV-doc-zh/docs/index.html`**
 
 **第四步：在当前目录（`openCV-doc-zh/docs/`）运行cmd窗口，在cmd窗口输入 `live-server`命令，运行本地服务器，例如：**
 
