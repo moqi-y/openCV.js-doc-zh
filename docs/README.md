@@ -79,6 +79,8 @@ inputElement.addEventListener("change", (e) => {
 
 要运行此网页，请复制上述内容并保存到index.html文件。请使用 Web 浏览器打开即可运行。
 
+<iframe width="700" height="400" src="http://192.168.2.23:8080/demo/"></iframe>
+
 ?>更好的做法是使用本地 Web 服务器来托管index.html
 
 **同步加载示例：**
@@ -925,18 +927,18 @@ OpenCV 中提供了 150 多种颜色空间转换方法。但是我们将研究�
 
 我们使用函数：`cv.cvtColor （src， dst， code， dstCn = 0）`
 
-| 参数  | 参数解释                                                     |
-| ----- | ------------------------------------------------------------ |
-| src   | 输入图像。                                                   |
-| dst   | 输出与输入图像相同大小和深度的图像                           |
-| code  | 色彩空间转换代码（参见 **[cv.颜色转换代码](https://docs.opencv.org/3.3.1/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0)**）。 |
-| dstCn | 目标图像中的通道数;如果参数为 0，则通道数自动从 输入图像和代码派生。 |
+| 参数  | 参数解释                                                                                                                                        |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| src   | 输入图像。                                                                                                                                      |
+| dst   | 输出与输入图像相同大小和深度的图像                                                                                                              |
+| code  | 色彩空间转换代码（参见**[cv.颜色转换代码](https://docs.opencv.org/3.3.1/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0)**）。 |
+| dstCn | 目标图像中的通道数;如果参数为 0，则通道数自动从 输入图像和代码派生。                                                                            |
 
-对于 RGB→灰色转换我们使用代码`cv.COLOR_RGBA2GRAY`。
+对于 RGB→灰色转换我们使用代码 `cv.COLOR_RGBA2GRAY`。
 
 **转换颜色示例**
 
-在`<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
+在 `<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
 
 ```js
 let src = cv.imread('canvasInput');
@@ -962,7 +964,7 @@ src.delete(); dst.delete();
 
 **图像范围示例**
 
-在`<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
+在 `<canvas>` 已准备好名为 canvasInput 和 canvasOutput 的元素。
 
 ```js
 let src = cv.imread('canvasInput');
@@ -975,26 +977,24 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); low.delete(); high.delete();
 ```
 
-
-
 ## 图像的几何变换
 
 了解如何对图像应用不同的几何变换，如旋转、平移等。
 
 **缩放**
 
-缩放只是调整图像的大小。OpenCV为此附带了一个函数`cv.resize（）`。可以手动指定图像的大小，也可以指定比例因子。使用不同的插值方法。优选的插值方法是`cv.INTER_AREA`用于收缩，`cv.INTER_CUBIC（slow）`和cv.INTER_LINEAR用于缩放。
+缩放只是调整图像的大小。OpenCV为此附带了一个函数 `cv.resize（）`。可以手动指定图像的大小，也可以指定比例因子。使用不同的插值方法。优选的插值方法是 `cv.INTER_AREA`用于收缩，`cv.INTER_CUBIC（slow）`和cv.INTER_LINEAR用于缩放。
 
 我们使用函数：`cv.resize （src， dst， dsize， fx = 0， fy = 0， interpolation = cv.INTER_LINEAR）`
 
-| 参数          | 参数解释                                                     |
-| ------------- | ------------------------------------------------------------ |
-| src           | 输入图像                                                     |
-| dst           | 输出图像;它的大小为dsize（当它不为零时）或从src.size（），fx和fy计算的大小;DST 的类型与 src的类型相同。 |
-| dsize         | 输出图像大小。                                               |
-| fx            | 沿横轴的比例因子。                                           |
-| fy            | 沿纵轴的比例因子。                                           |
-| interpolation | 插值方法（参见 **[cv.插值标志）](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)**)。 |
+| 参数          | 参数解释                                                                                                                                  |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| src           | 输入图像                                                                                                                                  |
+| dst           | 输出图像;它的大小为dsize（当它不为零时）或从src.size（），fx和fy计算的大小;DST 的类型与 src的类型相同。                                   |
+| dsize         | 输出图像大小。                                                                                                                            |
+| fx            | 沿横轴的比例因子。                                                                                                                        |
+| fy            | 沿纵轴的比例因子。                                                                                                                        |
+| interpolation | 插值方法（参见**[cv.插值标志）](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)**)。 |
 
 **图像大小调整示例**
 
@@ -1014,15 +1014,15 @@ src.delete(); dst.delete();
 
 我们使用函数：`cv.warpAffine （src， dst， M， dsize， flags = cv.INTER_LINEAR， borderMode = cv.BORDER_CONSTANT， borderValue = new cv.Scalar（））`
 
-| 参数        | 参数解释                                                     |
-| ----------- | ------------------------------------------------------------ |
-| src         | 输入图像。                                                   |
-| dst         | 输出大小为 dsize 且类型与 src 相同的图像。                   |
-| Mat         | 2 × 3 转换矩阵（cv.CV_64FC1 型）。                           |
-| dsize       | 输出图像的大小。                                             |
-| flags       | 插值方法（参见[cv.InterpolationFlags](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)）和可选标志WARP_INVERSE_MAP的组合，这意味着M是逆变换（dst→src） |
+| 参数        | 参数解释                                                                                                                                                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| src         | 输入图像。                                                                                                                                                                                                                       |
+| dst         | 输出大小为 dsize 且类型与 src 相同的图像。                                                                                                                                                                                       |
+| Mat         | 2 × 3 转换矩阵（cv.CV_64FC1 型）。                                                                                                                                                                                              |
+| dsize       | 输出图像的大小。                                                                                                                                                                                                                 |
+| flags       | 插值方法（参见[cv.InterpolationFlags](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#ga5bb5a1fea74ea38e1a5445ca803ff121)）和可选标志WARP_INVERSE_MAP的组合，这意味着M是逆变换（dst→src）                      |
 | borderMode  | 像素外推法（见[cv.BorderTypes](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#ga209f2f4869e304c82d07739337eae7c5)）;当borderMode=BORDER_TRANSPARENT时，表示目标图像中与源图像中的“异常值”对应的像素不会被函数修改。 |
-| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。              |
+| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。                                                                                                                                                                                  |
 
 **仿射变换示例**
 
@@ -1043,11 +1043,11 @@ src.delete(); dst.delete(); M.delete();
 
 我们使用函数：`cv.getRotationMatrix2D （center, angle, scale）`
 
-| 参数   | 参数解释                                                     |
-| ------ | ------------------------------------------------------------ |
-| center | 源图像中旋转的中心。                                         |
+| 参数   | 参数解释                                                             |
+| ------ | -------------------------------------------------------------------- |
+| center | 源图像中旋转的中心。                                                 |
 | angle  | 旋转角度（以度为单位）。正值表示逆时针旋转（假定坐标原点为左上角）。 |
-| scale  | 各向同性比例因子。                                           |
+| scale  | 各向同性比例因子。                                                   |
 
 **旋转变换示例**
 
@@ -1065,7 +1065,7 @@ src.delete(); dst.delete(); M.delete();
 
 **仿射变换**
 
-在仿射变换中，原始图像中的所有平行线在输出图像中仍将平行。要找到转换矩阵，我们需要输入图像中的三个点及其在输出图像中的相应位置。然后`cv.getAffineTransform`将创建一个2x3矩阵，该矩阵将传递给`cv.warpAffine`。
+在仿射变换中，原始图像中的所有平行线在输出图像中仍将平行。要找到转换矩阵，我们需要输入图像中的三个点及其在输出图像中的相应位置。然后 `cv.getAffineTransform`将创建一个2x3矩阵，该矩阵将传递给 `cv.warpAffine`。
 
 我们使用函数：`cv.getAffineTransform（src，dst）`
 
@@ -1098,15 +1098,15 @@ src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
 
 我们使用函数：`cv.warpPerspective （src， dst， M， dsize， flags = cv.INTER_LINEAR， borderMode = cv.BORDER_CONSTANT， borderValue = new cv.Scalar（））`
 
-| 参数        | 参数解释                                                     |
-| ----------- | ------------------------------------------------------------ |
-| src         | 输入图像。                                                   |
-| dst         | 输出大小为 dsize 且类型与 SRC 相同的图像。                   |
-| M           | 3 × 3 转换矩阵（cv.CV_64FC1 型）。                           |
-| dsize       | 输出图像的大小。                                             |
+| 参数        | 参数解释                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| src         | 输入图像。                                                                                                                                                                                                                                                                                                                                                                                          |
+| dst         | 输出大小为 dsize 且类型与 SRC 相同的图像。                                                                                                                                                                                                                                                                                                                                                          |
+| M           | 3 × 3 转换矩阵（cv.CV_64FC1 型）。                                                                                                                                                                                                                                                                                                                                                                 |
+| dsize       | 输出图像的大小。                                                                                                                                                                                                                                                                                                                                                                                    |
 | flags       | 插值方法（[cv.INTER_LINEAR](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#gga5bb5a1fea74ea38e1a5445ca803ff121ac97d8e4880d8b5d509e96825c7522deb) 或 [cv.INTER_NEAREST](https://docs.opencv.org/3.3.1/da/d54/group__imgproc__transform.html#gga5bb5a1fea74ea38e1a5445ca803ff121aa5521d8e080972c762467c45f3b70e6c)）和可选标志WARP_INVERSE_MAP的组合，将 M 设置为逆变换 （dst→src）。 |
-| borderMode  | 像素外推法（[cv.BORDER_CONSTANT](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aed2e4346047e265c8c5a6d0276dcd838)或[cv.BORDER_REPLICATE](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aa1de4cff95e3377d6d0cbe7569bd4e9f)）。 |
-| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。              |
+| borderMode  | 像素外推法（[cv.BORDER_CONSTANT](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aed2e4346047e265c8c5a6d0276dcd838)或[cv.BORDER_REPLICATE](https://docs.opencv.org/3.3.1/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5aa1de4cff95e3377d6d0cbe7569bd4e9f)）。                                                                         |
+| borderValue | 在恒定边框的情况下使用的值;默认情况下，它为 0。                                                                                                                                                                                                                                                                                                                                                     |
 
 `cv.getPerspectiveTransform （src， dst）`
 
@@ -1134,8 +1134,6 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
 ```
 
-
-
 ## *图像阈值
 
 了解如何使用全局阈值、自适应阈值、Otsu 二值化等将图像转换为二进制图像。
@@ -1144,85 +1142,57 @@ src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
 
 了解如何模糊图像，使用自定义内核过滤图像等。
 
-
-
 ## 形态转化
 
 了解形态转变，如侵蚀、扩张、打开、关闭等。
-
-
 
 ## 图像渐变
 
 了解如何查找图像渐变、边缘等。
 
-
-
 ## 精明边缘检测
 
 了解如何使用Canny Edge Detection查找边缘。
-
-
 
 ## 图像金字塔
 
 了解图像金字塔以及如何使用它们进行图像混合。
 
-
-
 ## OpenCV中的轮廓.js
 
 了解 OpenCV.js 中的轮廓。
-
-
 
 ## OpenCV中的直方图.js
 
 了解 OpenCV.js 中的直方图。
 
-
-
 ## OpenCV中的图像转换.js
 
 在OpenCV中学习不同的图像变换.js如傅里叶变换，余弦变换等。
-
-
 
 ## 模板匹配
 
 了解如何使用模板匹配在图像中搜索对象。
 
-
-
 ## 霍夫线变换
 
 了解如何检测图像中的线条。
-
-
 
 ## 霍夫圆变换
 
 了解如何检测图像中的圆圈。
 
-
-
 ## 基于分水岭算法的图像分割
 
 了解如何使用流域分割对影像进行分割。
-
-
 
 ## 使用 GrabCut 算法进行前景提取
 
 了解如何使用 GrabCut 算法提取前景。
 
-
-
 ## 用于视频捕获的图像处理
 
 学习视频捕获的图像处理。
-
-
 
 # 视频分析
 
