@@ -79,7 +79,12 @@ inputElement.addEventListener("change", (e) => {
 
 要运行此网页，请复制上述内容并保存到index.html文件。请使用 Web 浏览器打开即可运行。
 
-<iframe width="700" height="400" src="https://codepen.io/zhen-yuan/pen/OJrXOxM"></iframe>
+<iframe height="600" style="width: 100%;" scrolling="no" title="创建网页示例" src="https://codepen.io/zhen-yuan/embed/OJrXOxM?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/OJrXOxM">
+  创建网页示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 
 ?>更好的做法是使用本地 Web 服务器来托管index.html
 
@@ -167,6 +172,15 @@ cv.imshow("outputCanvas", mat);
 
 </html>
 ```
+
+
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/gOZMXdP?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/gOZMXdP">
+  Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 
 !>你必须调用[cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)的删除方法来释放Emscripten堆中分配的内存。有关详细信息，请参阅 [Emscripten 的内存管理](https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html#memory-management)。
 
