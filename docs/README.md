@@ -79,7 +79,7 @@ inputElement.addEventListener("change", (e) => {
 
 要运行此网页，请复制上述内容并保存到index.html文件。请使用 Web 浏览器打开即可运行。
 
-<iframe width="700" height="400" src="http://192.168.2.23:8080/demo/"></iframe>
+<iframe width="700" height="400" src="https://codepen.io/zhen-yuan/pen/OJrXOxM"></iframe>
 
 ?>更好的做法是使用本地 Web 服务器来托管index.html
 
