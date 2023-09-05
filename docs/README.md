@@ -283,7 +283,6 @@ dst.delete();
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
 ## 视频入门
 
 学习从相机捕获视频并播放
@@ -398,8 +397,6 @@ setTimeout(processVideo, 0);
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
-
 ## 向应用程序添加跟踪栏
 
 创建跟踪栏以控制某些参数
@@ -472,6 +469,16 @@ dst.delete();
 src1.delete();
 src2.delete();
 ```
+
+**示例:**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="opencv.js向应用程序添加跟踪栏" src="https://codepen.io/zhen-yuan/embed/YzdGmWz?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/YzdGmWz">
+  opencv.js向应用程序添加跟踪栏</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
 
 # 核心业务
 
