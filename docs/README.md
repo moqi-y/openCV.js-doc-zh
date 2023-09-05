@@ -79,12 +79,13 @@ inputElement.addEventListener("change", (e) => {
 
 要运行此网页，请复制上述内容并保存到index.html文件。请使用 Web 浏览器打开即可运行。
 
+**示例：**
+
 <iframe height="600" style="width: 100%;" scrolling="no" title="创建网页示例" src="https://codepen.io/zhen-yuan/embed/OJrXOxM?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/zhen-yuan/pen/OJrXOxM">
   创建网页示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
-
 
 ?>更好的做法是使用本地 Web 服务器来托管index.html
 
@@ -129,6 +130,7 @@ cv.imshow("outputCanvas", mat);
 将所有步骤放在一起，最终index.html如下所示:
 
 ```html
+
 <!DOCTYPE html>
 <html>
 
@@ -170,17 +172,14 @@ cv.imshow("outputCanvas", mat);
     <script async src="https://docs.opencv.org/3.4.0/opencv.js" type="text/javascript"></script>
 </body>
 
-</html>
+</html
 ```
-
-
 
 <iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/gOZMXdP?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/zhen-yuan/pen/gOZMXdP">
   Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
-
 
 !>你必须调用[cv.Mat](https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html)的删除方法来释放Emscripten堆中分配的内存。有关详细信息，请参阅 [Emscripten 的内存管理](https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html#memory-management)。
 
@@ -243,7 +242,7 @@ ctx.putImageData(imgData, 0, 0);
 
 **参数**:imageSource:	画布元素或 ID，或 IMG 元素或 ID。
 
-**返回值：**通道以 RGBA 顺序存储。
+**返回值：** 通道以 RGBA 顺序存储。
 
 我们使用 `cv.imshow（canvasSource，mat）`来显示它。该函数可能会缩放mat，具体取决于其深度：
 
@@ -276,6 +275,15 @@ src.delete();
 dst.delete();
 ```
 
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/RwEGyGW?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/RwEGyGW">
+  Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
 ## 视频入门
 
 学习从相机捕获视频并播放
@@ -296,7 +304,7 @@ navigator.mediaDevices.getUserMedia({ video： true, audio： false })
     });
 ```
 
-!从视频文件捕获视频时，不需要此功能。但请注意，HTML视频元素仅支持Ogg（Theora），WebM（VP8 / VP9）或MP4（H.264）的视频格式。
+!> 从视频文件捕获视频时，不需要此功能。但请注意，HTML视频元素仅支持Ogg（Theora），WebM（VP8 / VP9）或MP4（H.264）的视频格式。
 
 **播放视频**
 
@@ -346,7 +354,7 @@ function processVideo() {
 setTimeout(processVideo, 0);
 ```
 
-!>请记住在停止后删除 src 和 dst
+!> 请记住在停止后删除 src 和 dst
 
 **完整示例：**
 
@@ -381,6 +389,15 @@ function processVideo() {
 // 播放第一个
 setTimeout(processVideo, 0);
 ```
+
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js视频入门示例" src="https://codepen.io/zhen-yuan/embed/MWZjGRx?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/MWZjGRx">
+  openCV.js视频入门示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 
 ## 向应用程序添加跟踪栏
 
