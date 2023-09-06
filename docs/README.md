@@ -478,8 +478,6 @@ src2.delete();
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
-
 # 核心业务
 
 在本节中，您将学习一些对图像的基本操作，一些数学工具和一些数据结构等。
@@ -502,7 +500,16 @@ console.log('图像宽度: ' + src.cols + '\n' +
             '图像类型' + src.type() + '\n');
 ```
 
-!>`src.type()`在调试时非常重要，因为 OpenCV.js 代码中的大量错误是由无效数据类型引起的。
+!> `src.type()`在调试时非常重要，因为 OpenCV.js 代码中的大量错误是由无效数据类型引起的。
+
+**示例:**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js图像的基本操作示例" src="https://codepen.io/zhen-yuan/embed/WNLoZLm?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/WNLoZLm">
+  openCV.js图像的基本操作示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 
 **构建Mat(垫子)的方法**
 
