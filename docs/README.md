@@ -1032,6 +1032,15 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); low.delete(); high.delete();
 ```
 
+**示例:**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/XWoRWoK?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/XWoRWoK">
+  Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
 ## 图像的几何变换
 
 了解如何对图像应用不同的几何变换，如旋转、平移等。
