@@ -510,7 +510,6 @@ console.log('图像宽度: ' + src.cols + '\n' +
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
 **构建Mat(垫子)的方法**
 
 有 4 个基本构造函数：
@@ -831,6 +830,16 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); logo.delete(); roi.delete(); mask.delete();
 maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
 ```
+
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/GRPmRZM?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/GRPmRZM">
+  Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
 
 ## 数据结构
 
