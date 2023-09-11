@@ -1072,6 +1072,15 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete();
 ```
 
+**示例:**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/zhen-yuan/embed/rNomNXM?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/rNomNXM">
+  Untitled</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
 **变换**
 
 变换是物体位置的转移。
