@@ -1,11 +1,3 @@
-<!--
- * @Author: yuanzhen
- * @Date: 2023-02-28 16:48:43
- * @LastEditTime: 2023-09-12 09:21:59
- * @FilePath: \openCV-doc-zh\docs\_coverpage.md
- * @Description: 
---
-
 ![logo](./img/opencv-logo-small.png)
 
 # OpenCV.js `<small>`v3.x `</small>`
