@@ -839,8 +839,6 @@ maskInv.delete(); imgBg.delete(); imgFg.delete(); sum.delete();
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
-
 ## 数据结构
 
 了解一些数据结构。您将学习一些数据结构：**点**，**标量**，**宽高尺寸**，**圆形**，矩形，**旋转矩形**等。
@@ -1040,12 +1038,11 @@ src.delete(); dst.delete(); low.delete(); high.delete();
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
 ## 图像的几何变换
 
 了解如何对图像应用不同的几何变换，如旋转、平移等。
 
-**缩放**
+### **缩放**
 
 缩放只是调整图像的大小。OpenCV为此附带了一个函数 `cv.resize（）`。可以手动指定图像的大小，也可以指定比例因子。使用不同的插值方法。优选的插值方法是 `cv.INTER_AREA`用于收缩，`cv.INTER_CUBIC（slow）`和cv.INTER_LINEAR用于缩放。
 
@@ -1080,8 +1077,7 @@ src.delete(); dst.delete();
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-
-**变换**
+### **变换**
 
 变换是物体位置的转移。
 
@@ -1110,7 +1106,16 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); M.delete();
 ```
 
-**旋转**
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js图像仿射变换示例示例" src="https://codepen.io/zhen-yuan/embed/ZEVKyrz?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/ZEVKyrz">
+  openCV.js图像仿射变换示例示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
+### **旋转**
 
 旋转图像的角度θ通过表单的变换矩阵实现。但是 OpenCV 提供缩放旋转和可调节旋转中心，因此您可以在您喜欢的任何位置旋转。
 
@@ -1136,7 +1141,15 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); M.delete();
 ```
 
-**仿射变换**
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js图像旋转变换示例示例" src="https://codepen.io/zhen-yuan/embed/QWzvgmY?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/QWzvgmY">
+  openCV.js图像旋转变换示例示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### **仿射变换**
 
 在仿射变换中，原始图像中的所有平行线在输出图像中仍将平行。要找到转换矩阵，我们需要输入图像中的三个点及其在输出图像中的相应位置。然后 `cv.getAffineTransform`将创建一个2x3矩阵，该矩阵将传递给 `cv.warpAffine`。
 
@@ -1165,7 +1178,16 @@ cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
 ```
 
-**透视转换**
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js图像获取仿射变换示例" src="https://codepen.io/zhen-yuan/embed/jOXmweo?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/jOXmweo">
+  openCV.js图像获取仿射变换示例</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+
+### **透视转换**
 
 对于透视转换，您需要一个 3x3 转换矩阵。即使在转换后，直线仍将保持直线。要找到此转换矩阵，您需要在输入图像上 4 个点和输出图像上的相应点。在这 4 点中，有 3 点不应该是共线的。然后可以通过函数 `cv.getPerspectiveTransform` 找到转换矩阵。然后将 `cv.warpPerspective` 与这个 3x3 转换矩阵一起应用。
 
@@ -1206,6 +1228,15 @@ cv.warpPerspective(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new 
 cv.imshow('canvasOutput', dst);
 src.delete(); dst.delete(); M.delete(); srcTri.delete(); dstTri.delete();
 ```
+
+**示例：**
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="openCV.js图像透视变换" src="https://codepen.io/zhen-yuan/embed/abPWwPB?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/zhen-yuan/pen/abPWwPB">
+  openCV.js图像透视变换</a> by zhen yuan (<a href="https://codepen.io/zhen-yuan">@zhen-yuan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 
 ## *图像阈值
 
