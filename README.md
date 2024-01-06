@@ -6,7 +6,7 @@
 
 **如何使用：**
 
-1、打开OpenCV.js中文文档网站：[OpenCV.js (中文文档)](https://opencv.moqi.ml/#/ "点击打开网站")
+1、打开OpenCV.js中文文档网站：[OpenCV.js (中文文档)](https://opencv.201005.xyz "点击打开网站")
 
 2、在该项目仓库中查看示例代码，示例代码文件夹 **`demo`** ,示例代码路径：`openCV-doc-zh/demo/xxx.html`
 
